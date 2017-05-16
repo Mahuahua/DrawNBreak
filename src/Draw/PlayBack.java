@@ -16,7 +16,7 @@ import java.util.Timer;
  */
 public class PlayBack extends JPanel implements Observer {
     private Model model;
-    JButton start, end, play, playback;
+    JButton start, end, play, playback, breaking;
     JSlider js;
     Timer timer;
     Timer timerb;
@@ -31,6 +31,7 @@ public class PlayBack extends JPanel implements Observer {
         start = new JButton("Start");
         end = new JButton("End");
         playback = new JButton("Backwards");
+        breaking = new JButton("BreakImage");
         js = new JSlider();
         js.setMinimum(0);
         js.setMaximum(0);
@@ -82,6 +83,16 @@ public class PlayBack extends JPanel implements Observer {
             }
         });
 
+
+        breaking.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Break.DoNotBreak(model.image);
+            }
+        });
+
+
+        add(breaking);
         add(play);
         add(playback);
         add(js);

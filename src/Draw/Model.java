@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -63,6 +64,7 @@ public class Model extends Observable implements Serializable {
     public STROKE curStroke = new STROKE();
     ;
     public int curColor = Color.black.getRGB();
+    public BufferedImage image = null;
     public int curWidth = 1;
     public boolean viewMode = true; //false for fit, true for full-size
     public boolean playing = false;

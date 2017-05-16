@@ -18,6 +18,7 @@ public class gamePanel extends JPanel {
     Brick bricks[];
     Ball ball;
     Ball badboy;
+    BufferedImage bufferedImage;
     public int gameState = 0;//state 0 ,1 ,2 ,3,4 -> pre,in, in with hazard, post-win, post-lose
     //6 pause
     int lastState = 0;
@@ -124,7 +125,7 @@ public class gamePanel extends JPanel {
     public class KA extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
             if (gameState == 0 || (gameState == 4 || gameState == 3)) {
-                init();
+                init(bufferedImage);
                 timer = new Timer();
                 timer.schedule(new update(), 0, Math.round(1000 / Config.FPS));
             } else if (e.getKeyChar() == 'p') {
@@ -160,7 +161,7 @@ public class gamePanel extends JPanel {
 
     Timer timer;
 
-    public gamePanel(double fps, double speed) {
+    public gamePanel(double fps, double speed, BufferedImage image) {
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(new KA());
@@ -176,11 +177,11 @@ public class gamePanel extends JPanel {
         } catch (Exception e) {
             System.out.println("imagebackgroundfilereaderrOR");
         }
-        init();
+        init(image);
         gameState = 0;
     }
 
-    public void init() {
+    public void init(BufferedImage image) {
         gameState = 1;
         life = 3;
         score = 0;
@@ -189,18 +190,20 @@ public class gamePanel extends JPanel {
         bricks = new Brick[Config.NUMPARTS];
         badboy = new Ball(true);//a evil ball
         int c = 0;
-        BufferedImage inputImage = null;
-        try {
-            inputImage = ImageIO.read(new File("breakMe.jpg"));
-        } catch (Exception e) {
-
+        BufferedImage inputImage = image;
+        if (image == null) {
+            try {
+                inputImage = ImageIO.read(new File("breakMe.jpg"));
+            } catch (Exception e) {
+            }
         }
+
         Image img = inputImage.getScaledInstance(Config.PARTWIDTH * Config.NUMPARTCOL, Config.PARTHEIGHT * Config.NUMPARTROW, Image.SCALE_DEFAULT);
-        BufferedImage buffered = new BufferedImage(Config.PARTWIDTH * Config.NUMPARTCOL, Config.PARTHEIGHT * Config.NUMPARTROW, BufferedImage.TYPE_INT_ARGB);
-        buffered.getGraphics().drawImage(img, 0, 0, null);
+        bufferedImage = new BufferedImage(Config.PARTWIDTH * Config.NUMPARTCOL, Config.PARTHEIGHT * Config.NUMPARTROW, BufferedImage.TYPE_INT_ARGB);
+        bufferedImage.getGraphics().drawImage(img, 0, 0, null);
         for (int i = 0; i < Config.NUMPARTROW; i++) {
             for (int j = 0; j < Config.NUMPARTCOL; j++) {
-                BufferedImage buffImage = buffered.getSubimage(
+                BufferedImage buffImage = bufferedImage.getSubimage(
                         j * Config.PARTWIDTH,
                         i * Config.PARTHEIGHT,
                         Config.PARTWIDTH,

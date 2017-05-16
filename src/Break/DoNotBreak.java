@@ -2,18 +2,24 @@ package Break;
 
 import javax.swing.*;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+
 /**
  * Created by Zhaoyang on 1/25/2016.
  */
 public class DoNotBreak extends JFrame {
 
-    public DoNotBreak(double FPS,double speed) {
-        add(new gamePanel(FPS,speed));
+    private DoNotBreak(double FPS,double speed, BufferedImage image) {
+        add(new gamePanel(FPS,speed,image));
         setTitle("Break Image. Not Break.Paddle!");
         setMinimumSize(new Dimension(600, 400));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(Config.WIDTH, Config.HEIGHT);
         setVisible(true);
+    }
+
+    public DoNotBreak(BufferedImage image) {
+        new DoNotBreak(Config.FPS, Config.SPEED, image);
     }
     public static void main(String[] args) {
 
@@ -25,6 +31,6 @@ public class DoNotBreak extends JFrame {
             speed =Double.parseDouble(args[1]);
 
         }
-       DoNotBreak game = new DoNotBreak(FPS,speed);
+       DoNotBreak game = new DoNotBreak(FPS,speed,null);
     }
 }
