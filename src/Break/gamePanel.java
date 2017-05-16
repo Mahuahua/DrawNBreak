@@ -206,8 +206,8 @@ public class gamePanel extends JPanel {
                 BufferedImage buffImage = bufferedImage.getSubimage(
                         j * Config.PARTWIDTH,
                         i * Config.PARTHEIGHT,
-                        Config.PARTWIDTH,
-                        Config.PARTHEIGHT);
+                        Config.PARTWIDTH-1,
+                        Config.PARTHEIGHT-1);
                 bricks[c] = new Brick(j * Config.PARTWIDTH + Config.SIDEPADDING, i * Config.PARTHEIGHT + Config.TOPPADDING, buffImage);
                 c++;
             }
